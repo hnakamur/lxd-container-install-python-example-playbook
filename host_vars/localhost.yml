@@ -1,0 +1,8 @@
+---
+containers:
+  - name: jessie
+    image: debian/jessie/amd64
+  - name: xenial
+    image: ubuntu/xenial/amd64
+  - name: centos7
+    image: centos/7/amd64

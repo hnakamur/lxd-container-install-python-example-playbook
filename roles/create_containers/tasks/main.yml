@@ -1,0 +1,18 @@
+---
+- name: Create and launch a container
+  lxd_container:
+    name: "{{ item.name }}"
+    state: started
+    source:
+      type: image
+      mode: pull
+      server: https://images.linuxcontainers.org
+      protocol: lxd
+      alias: "{{ item.image }}"
+    profiles: ["default"]
+    wait_for_ipv4_addresses: true
+    timeout: 600
+  with_items: "{{ containers }}"
+
+- include: install_python.yml
+  with_items: "{{ containers }}"

@@ -1,0 +1,13 @@
+---
+- name: Check if we need to install python
+  delegate_to: "{{ item.name }}"
+  raw: dpkg -s python
+  register: python_install_check
+  failed_when: python_install_check.rc not in [0, 1]
+  changed_when: no
+  when: item.image | regex_replace('/.*$', '') in ['ubuntu', 'debian']
+
+- name: Install python
+  delegate_to: "{{ item.name }}"
+  raw: apt-get install -y python
+  when: "{{ python_install_check.rc | default(0) }} != 0"
